@@ -5,13 +5,14 @@ using System.Text;
 
 namespace DemoEven
 {
-    class Program
+   public class Program
     {
+        int[,] tst = new int[,] { };
         static void Main(string[] args)
         {
             //get input
             string textFile = ConfigurationManager.AppSettings["FileWithPath"];
-
+            
             string str = "";
             if (File.Exists(textFile))
             {
@@ -27,7 +28,10 @@ namespace DemoEven
             if (!String.IsNullOrEmpty(str.Trim()))
             {
                 Program obj = new Program();
-                obj.InputCalculation(str);
+                var result= obj.InputCalculation(str);
+                Console.WriteLine($"The Maximum Total Sum Of Non-Even Numbers From Top To Bottom Is:  {result[0, 0]}");
+
+                Console.ReadKey();
             }
             else
             {
@@ -37,7 +41,7 @@ namespace DemoEven
 
         }
 
-        public void InputCalculation(string str)
+        public int[,] InputCalculation(string str)
         {
 
             var inputValue = GetInput(str);
@@ -45,12 +49,9 @@ namespace DemoEven
             string[] arrayOfRowsByNewlines = inputValue.Split('\n');
 
             var tableHolder = FlattenTheTriangleIntoTable(arrayOfRowsByNewlines);
-
-            var result = WalkThroughTheNode(arrayOfRowsByNewlines, tableHolder);
-
-            Console.WriteLine($"The Maximum Total Sum Of Non-Even Numbers From Top To Bottom Is:  {result[0, 0]}");
-
-            Console.ReadKey();
+            tst= WalkThroughTheNode(arrayOfRowsByNewlines, tableHolder);
+            
+            return tst;
         }
 
         private static string GetInput(string input)
